@@ -1,0 +1,5 @@
+# el zip es el entregable empaquetado, no fuente: se regenera desde index.html
+*.zip
+.DS_Store
+# capturas de control y revisión, no forman parte de la web
+control.png
