@@ -1,40 +1,53 @@
 # CFO Connect — web
 
-Página del ciclo **CFO Connect · Learning by sharing**.
+Web del ciclo **CFO Connect · Learn · Link · Lead**: comunidad de directores
+financieros de Andalucía Occidental.
 
-Una sola página estática, un solo fichero: `index.html` (20 KB). Los logos
-van como SVG en línea, así que no hay carpeta de imágenes ni dependencias
-que se puedan romper. Lo único que se pide fuera es la tipografía (Archivo
-y Newsreader, de Google Fonts).
+## Qué hay aquí
+
+| Fichero | Qué es |
+|---|---|
+| `index.html` | **Lo que se publica**: landing de una sola pantalla (50 KB). Logo, lema, descripción breve y pie. |
+| `web-completa.html` | Versión larga con todas las secciones (20 KB). Guardada por si vuelve a hacer falta; **no se sirve**. |
+| `CNAME` | Fija el dominio `cfo-connect.es`. Si se borra, la web vuelve a la dirección `github.io`. |
+
+## Cero dependencias externas
+
+`index.html` no llama a nadie: la tipografía Archivo va **incrustada en
+base64** dentro del propio fichero (subset latino, el que cubre el español).
+Sin analítica, sin cookies, sin JavaScript, sin imágenes remotas. Por eso no
+necesita banner de cookies: el visitante no habla con ningún tercero.
+
+Eso es deliberado y hay que mantenerlo. Las fuentes de Google ceden la IP del
+visitante a un tercero fuera de la UE, que es justo lo que se quiso evitar.
+
+`web-completa.html` **sí** sigue llamando a Google Fonts: si algún día se
+publica, hay que incrustarle las fuentes igual que a la landing.
+
+## La cabecera no es opcional
+
+Las cinco primeras líneas (`<!DOCTYPE>`, `<html lang="es">`, `<head>`,
+`<meta charset="utf-8">`, viewport) son obligatorias. Sin la declaración de
+codificación, cualquier alojamiento que no la mande en la respuesta HTTP hace
+que el navegador caiga en latin-1 y la página se lea «AndalucÃ­a Occidental».
+Comprobado sirviendo el fichero con `Content-Type: text/html` sin charset.
 
 ## Ver en local
-
-No hace falta servidor ni compilar nada: basta abrir `index.html` en el
-navegador. Si se prefiere servirlo:
 
 ```bash
 python3 -m http.server 8000     # y abrir http://localhost:8000
 ```
 
+Nota: la portada tiene una animación de entrada de ~2,5 s (el arco se dibuja,
+el texto sube). Para capturar la pantalla hay que esperar a que termine.
+
 ## Publicación
 
-Se publica con GitHub Pages desde la rama `main`, en el dominio
-`cfo-connect.es` (con `www` redirigido a la raíz) y HTTPS obligatorio.
+GitHub Pages desde `main`, raíz del repositorio, dominio `cfo-connect.es`.
 
-El fichero `CNAME` de la raíz es el que fija el dominio: si se borra, la
-web vuelve a la dirección `github.io`.
-
-## Estructura de la página
-
-Secciones, en orden: portada · qué es · el logo · las reglas · la sesión ·
-los temas · 2027 · pertenecer.
-
-La navegación es por anclas (`#que-es`, `#reglas`, `#sesion`…), con
-desplazamiento suave y tema oscuro fijo.
-
-## Tipografías
-
-Se cargan de Google Fonts. Si algún día la página tiene que funcionar sin
-internet o sin llamadas a terceros, hay que descargar los `.woff2` y
-servirlos desde el propio repositorio — es el único punto externo que
-queda.
+**Pendiente:** el DNS del dominio está en Hostinger y apunta a su página de
+dominio aparcado (`2.57.91.91`). Para que Pages sirva la web hay que cambiar
+en la zona de Hostinger el registro `A` de `@` por los cuatro de GitHub
+(`185.199.108.153`, `.109.153`, `.110.153`, `.111.153`) y dejar el `CNAME` de
+`www` apuntando a `claudia-assistant.github.io`. Después, activar «Enforce
+HTTPS» en Pages.
